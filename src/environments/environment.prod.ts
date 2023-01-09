@@ -1,3 +1,5 @@
+// 1- npm run build
+// 2- firebase deploy --only hosting
 export const environment = {
   production: true,
   firebase: {

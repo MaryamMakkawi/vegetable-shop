@@ -27,4 +27,7 @@ export class AuthService{
     return this.OAuthProvider(new auth.GoogleAuthProvider());
   }
 
+  logout(){
+    return this.afAuth.signOut();
+  }
 }

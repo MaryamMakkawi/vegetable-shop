@@ -130,6 +130,12 @@
 .links {
     display: flex;
     justify-content: space-between;
+    &:hover{
+        cursor: pointer;
+        & a .bi-google{
+          color: #8f8f8f;
+        }
+    }
 
 }
 
@@ -163,4 +169,6 @@ input[type='submit']:active {
 }
 .bi-google{
   color: #45f3ff;
+  transition: 0.5s;
+
 }
