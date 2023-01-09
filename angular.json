@@ -108,6 +108,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "vegetable-shop:build:production",
+            "firebaseProject": "o-shop-54808",
+            "firebaseHostingSite": "o-shop-54808"
+          }
         }
       }
     }

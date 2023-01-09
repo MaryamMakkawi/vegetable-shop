@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  firebase : {
+  firebase: {
     apiKey: "AIzaSyBukYs9lWBr3UEQTGVQtXgUjw_3I9y2SZA",
     authDomain: "o-shop-54808.firebaseapp.com",
+    databaseURL: "https://o-shop-54808-default-rtdb.firebaseio.com",
     projectId: "o-shop-54808",
     storageBucket: "o-shop-54808.appspot.com",
     messagingSenderId: "918077409482",

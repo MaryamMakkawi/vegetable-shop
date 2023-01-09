@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "o-shop-54808"
+  },
+  "targets": {
+    "o-shop-54808": {
+      "hosting": {
+        "vegetable-shop": [
+          "o-shop-54808"
+        ]
+      }
+    }
   }
 }

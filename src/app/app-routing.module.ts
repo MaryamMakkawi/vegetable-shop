@@ -7,12 +7,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./layout/layout.module').then((m) => m.LayoutModule),
   },
-
   {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
   },
+
   { path: 'product', loadChildren: () => import('./components/product/product.module').then(m => m.ProductModule) },
   { path: 'shopping-cart', loadChildren: () => import('./components/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
   { path: 'check-out', loadChildren: () => import('./components/check-out/check-out.module').then(m => m.CheckOutModule) },
