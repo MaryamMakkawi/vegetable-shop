@@ -12,15 +12,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   googleLogin() {
+
     this.auth.SignInWithGoogle()
       .then((res) => {
         console.log(`Successfully logged in!`);
-
       })
       .catch((error) => {
         console.log(error);
       });
-
 
   }
 }

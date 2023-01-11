@@ -8,9 +8,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  user: any;
   constructor(private auth: AuthService, private route: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user')!);
+  }
 
   logout() {
     this.auth.logout().then((res) => {

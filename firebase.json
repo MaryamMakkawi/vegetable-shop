@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "y",
+    "firebase": "<vegetable-shop>",
+    "public": "./dist/vegetable-shop",
     "ignore": [
       "firebase.json",
       "**/.*",
