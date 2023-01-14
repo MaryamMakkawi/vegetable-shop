@@ -18,7 +18,6 @@ import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-// import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
   declarations: [
@@ -39,6 +38,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     providePerformance(() => getPerformance()),
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
+
+
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,
