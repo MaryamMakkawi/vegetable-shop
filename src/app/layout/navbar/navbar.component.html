@@ -37,7 +37,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ userData ? userData?.displayName : "Username" }}
+            {{ userData ? userData.displayName : "Username" }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
@@ -46,7 +46,7 @@
               >
             </li>
 
-            <ng-container *ngIf="isAdmin">
+            <ng-container *ngIf="userData?.isAdmin">
               <li>
                 <a class="dropdown-item" routerLink="admin/orders"
                   ><i class="bi bi-gear me-2 h5"></i>Manage Orders</a

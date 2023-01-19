@@ -9,7 +9,6 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class AuthService {
-  // user$!: Observable<firebase.User| null >
   constructor(
     private afAuth: AngularFireAuth,
     private route: Router,
@@ -20,7 +19,7 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((user) => {
-        this.user.onSet(user);
+        this.user.add(user);
         localStorage.setItem('user', JSON.stringify(user));
         this.route.navigate(['/home']);
       })

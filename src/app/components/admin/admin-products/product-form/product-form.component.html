@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <form class="row g-3" [formGroup]="productForm">
+        <div class="col-12">
+          <label for="inputTitle" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputTitle"
+            formControlName="title"
+            [(ngModel)]="product.title"
+          />
+
+          <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+            Tooltip on top
+          </button> -->
+
+        </div>
+
+        <div class="col-12">
+          <label for="inputPrice" class="form-label">Price</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputPrice"
+            formControlName="price"
+            [(ngModel)]="product.price"
+          />
+        </div>
+
+        <div class="col-12">
+          <label for="inputImageURL" class="form-label">ImageURL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputImageURL"
+            formControlName="imageUrl"
+            [(ngModel)]="product.imageUrl"
+          />
+        </div>
+
+        <div class="col-12">
+          <label for="inputCategory" class="form-label">Category:</label>
+          <select
+            id="inputCategory"
+            class="form-select"
+            formControlName="category"
+            [(ngModel)]="product.category"
+          >
+            <option selected>Choose...</option>
+            <option
+              *ngFor="let category of categories"
+              [value]="category.name"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <button
+            [disabled]="productForm.invalid"
+            (click)="addNewProduct()"
+            type="button"
+            class="btn btn-primary"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card" style="width: 18rem">
+        <img
+          *ngIf="product.imageUrl"
+          [src]="product.imageUrl"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h4 *ngIf="product.title" class="card-title">
+            Title:{{ product.title }}
+          </h4>
+          <p *ngIf="product.price" class="card-text">
+            Price:{{ product.price }}$
+          </p>
+          <p *ngIf="product.category" class="card-text">
+            category:{{ product.category }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

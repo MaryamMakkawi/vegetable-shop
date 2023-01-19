@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -9,8 +10,7 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  userData: any;
-  isAdmin: boolean = false;
+  userData!: User;
 
   constructor(
     private auth: AuthService,
@@ -19,8 +19,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.userData = await this.user.onReadUser(this.user.userUid());
-    this.isAdmin = this.userData.isAdmin == 'true';
+    this.userData = await this.user.get(this.user.getId());
   }
 
   logout() {

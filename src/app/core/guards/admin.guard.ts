@@ -23,8 +23,8 @@ export class AdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.user.onReadUser(this.user.userUid()).then((user) => {
-      if (user.isAdmin == 'true') {
+    return this.user.get(this.user.getId()).then((user) => {
+      if (user.isAdmin) {
         return true;
       } else {
         return this.router.navigateByUrl('/home');

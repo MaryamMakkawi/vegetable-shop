@@ -7,40 +7,37 @@ import { getDatabase } from 'firebase/database';
   providedIn: 'root',
 })
 export class UserService {
- private userData: any;
   db = getDatabase();
-  tasksRef = ref(this.db, 'users');
+  urlRef = ref(this.db, 'users');
 
   constructor() {}
 
-  onSet(user: any) {
+  add(user: any) {
     if (user.user) {
       set(ref(this.db, 'users/' + user.user.uid), {
-        displayName: `${user.user.displayName}`,
-        email: `${user.user.email}`,
-        photoURL: `${user.user.photoURL}`,
-        isAdmin: 'true',
+        displayName: user.user.displayName,
+        email: user.user.email,
+        photoURL: user.user.photoURL,
+        uid: user.user.uid,
+        isAdmin: true,
       });
     }
   }
 
-  onReadUser(uid: any) {
+  get(uid: any) {
     const refOneUser = ref(this.db, 'users/' + uid);
     return get(refOneUser).then((data) => {
-      this.userData = data.val();
-      return this.userData;
+      return data.val();
     });
   }
 
-  userUid() {
+  getId() {
     const currentUser = JSON.parse(localStorage.getItem('user')!);
     return currentUser.user.uid;
   }
 }
 
-// TODO Add(store) user in fireStore in firebase
-
-// get(this.tasksRef)
+// get(this.urlRef)
 //   .then((snapshot) => {
 //     const data = snapshot.val();
 //     console.log(data);
@@ -49,13 +46,14 @@ export class UserService {
 //     console.error(err);
 //   });
 //   // changes'
-//   onValue(this.tasksRef, (snapshot) => {
+//   onValue(this.urlRef, (snapshot) => {
 //     const data = snapshot.val();
 //     console.log(data);
 //   });
 
 // }
-
+// //set add and update on found data
+// //push only add data new found or not
 // onSet() {
 //   set(ref(this.db, 'users/' + 1), {
 //     username: 's',
@@ -65,9 +63,9 @@ export class UserService {
 // }
 
 //   db = getDatabase();
-//   tasksRef = ref(this.db, '/usersg9HHhVWL9AaWGyFIHMziyG0WiJa2');
+//   urlRef = ref(this.db, '/usersg9HHhVWL9AaWGyFIHMziyG0WiJa2');
 // onDelete(){
-//   remove(this.tasksRef).then(() => {
+//   remove(this.urlRef).then(() => {
 //     console.log("location removed");
 //   });
 // }

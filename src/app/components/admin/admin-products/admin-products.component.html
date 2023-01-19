@@ -1,1 +1,13 @@
-<p>admin-products works!</p>
+<div class="container">
+  <button type="button" class="btn btn-primary" routerLink="new">
+    Add New Product
+  </button>
+
+  <ag-grid-angular
+    style="width: 800px; height: 900px"
+    class="ag-theme-alpine"
+    [rowData]="products"
+    [columnDefs]="columnDefs"
+  >
+  </ag-grid-angular>
+</div>
