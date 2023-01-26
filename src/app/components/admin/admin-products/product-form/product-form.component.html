@@ -15,7 +15,6 @@
           <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
             Tooltip on top
           </button> -->
-
         </div>
 
         <div class="col-12">
@@ -50,7 +49,7 @@
           >
             <option selected>Choose...</option>
             <option
-              *ngFor="let category of categories"
+              *ngFor="let category of categories | async"
               [value]="category.name"
             >
               {{ category.name }}
@@ -58,14 +57,33 @@
           </select>
         </div>
 
-        <div class="col-12">
+        <div class="col-2" *ngIf="!id">
           <button
             [disabled]="productForm.invalid"
             (click)="addNewProduct()"
             type="button"
             class="btn btn-primary"
           >
-            Save
+            Add
+          </button>
+        </div>
+        <div class="col-2" *ngIf="id">
+          <button
+            [disabled]="productForm.invalid"
+            (click)="editProduct(product)"
+            type="button"
+            class="btn btn-primary"
+          >
+            Update
+          </button>
+        </div>
+        <div class="col-2">
+          <button
+            (click)="onCancel()"
+            type="button"
+            class="btn btn-primary"
+          >
+            Cancel
           </button>
         </div>
       </form>

@@ -1,29 +1,43 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-
+import { map } from 'rxjs';
+import { ApiService } from 'src/app/core/services/api.service';
 import { Product } from '../interfaces/product.interface';
-import { NotifierService } from './notifier.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(
-    private notifierService: NotifierService,
-    private angularFireDatabase: AngularFireDatabase
-  ) {}
+  constructor(private api: ApiService) {}
 
   add(product: Product) {
-    if (product) {
-      this.angularFireDatabase.list('/products').push(product);
-      this.notifierService.successNotification('success added Product.');
-    } else {
-      this.notifierService.errorNotification('Error added Product.');
-    }
+    return this.api.post('products', product);
   }
 
-  get() {
-    return this.angularFireDatabase.list('products/').valueChanges();
+  update(id: string, product: Product) {
+    return this.api.put(`products/${id}`, product);
+  }
+
+  delete(id: string) {
+    return this.api.delete(`/products${id}`);
+  }
+
+  getAll() {
+    return this.api.get('products/');
+  }
+
+  get(id: string) {
+    return this.api.get(`products/${id}`);
+  }
+
+  convertData(data: any) {
+    let arrayOfObj: any[] = [];
+    Object.keys(data).forEach((key) =>
+      arrayOfObj.push({
+        id: key,
+        ...data[key],
+      })
+    );
+    return arrayOfObj;
   }
 }

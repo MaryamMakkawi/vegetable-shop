@@ -1,13 +1,27 @@
 <div class="container">
-  <button type="button" class="btn btn-primary" routerLink="new">
+  <button type="button" class="btn btn-primary mb-3" (click)="goNewProduct()">
     Add New Product
   </button>
 
+  <div class="col-md-5 mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search in Table"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearch()"
+    />
+  </div>
+
   <ag-grid-angular
-    style="width: 800px; height: 900px"
+    style="width: 910px; height: 400px"
     class="ag-theme-alpine"
     [rowData]="products"
     [columnDefs]="columnDefs"
+    rowSelection="single"
+    [pagination]="true"
+    [paginationPageSize]="6"
+    (gridReady)="gridReady($event)"
   >
   </ag-grid-angular>
 </div>
