@@ -1,0 +1,30 @@
+.home {
+  display: flex;
+  .parent-category {
+    .categories {
+      margin-top: 30px;
+      margin-right: 20px;
+      cursor: pointer;
+      height: fit-content;
+      &.active {
+        background-color: rgba(0, 0, 255, 0.514);
+        color: white;
+      }
+    }
+  }
+  .parent-product {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    .product {
+      width: 20rem;
+      margin: 20px 10px 0 0;
+      .card-img-top {
+        height: 150px;
+        max-height: fit-content;
+        object-fit: cover;
+      }
+    }
+  }
+}
+

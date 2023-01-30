@@ -1,3 +1,39 @@
-<div class="container">home work !</div>
-git commit -m "Admin Product add delete edit & view & Refactoring
-code" git push origin main
+<div class="container home">
+  <div class="parent-category">
+    <div class="card sticky-top categories" style="width: 18rem">
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item"
+          [class.active]="active == -1"
+          (click)="filteredProduct = products"
+          routerLink="/home"
+        >
+          All Categories
+        </li>
+        <li
+          class="list-group-item"
+          [class.active]="active == i"
+          *ngFor="let category of categories; let i = index"
+          (click)="filter(category.name, i)"
+        >
+          {{ category.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="parent-product">
+    <div class="card product" *ngFor="let product of filteredProduct">
+      <img class="card-img-top" [src]="product.imageUrl" alt="not-found" />
+      <div class="card-body">
+        <h5 class="card-title">name: {{ product.title }}</h5>
+        <p class="card-text">Price: {{ product.price }}$</p>
+        <p class="card-text">Category: {{ product.category }}</p>
+        <hr />
+        <button class="btn btn-primary w-100"
+         (click)="addToCart()"
+        >Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div>

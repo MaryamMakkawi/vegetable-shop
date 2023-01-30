@@ -1,5 +1,7 @@
-
-.nav-item{
+.nav-item {
   display: flex;
   align-items: center;
+}
+.dropdown-menu {
+  z-index: 9999;
 }

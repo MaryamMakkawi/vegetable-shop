@@ -19,7 +19,7 @@ export class ProductService {
   }
 
   delete(id: string) {
-    return this.api.delete(`/products${id}`);
+    return this.api.delete(`/products/${id}`);
   }
 
   getAll() {
