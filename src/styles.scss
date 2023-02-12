@@ -62,6 +62,9 @@ nav {
   background-image: $gradient;
 }
 .cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     color: $hover-color;
     cursor: pointer;

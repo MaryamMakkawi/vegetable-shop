@@ -24,8 +24,12 @@
             class="nav-link active"
             aria-current="page"
             routerLink="/shopping-cart"
-            ><i class="bi bi-cart4 me-3 h2 cart"></i
-          ></a>
+            ><i class="bi bi-cart4 me-3 h2 cart">
+              <span *ngIf="cartId" class="icon">
+                {{ quantity }}
+              </span>
+            </i>
+          </a>
         </li>
 
         <li class="nav-item dropdown">

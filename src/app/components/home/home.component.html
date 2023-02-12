@@ -23,16 +23,37 @@
   </div>
 
   <div class="parent-product">
-    <div class="card product" *ngFor="let product of filteredProduct">
+    <div
+      class="card product"
+      *ngFor="let product of filteredProduct; let i = index"
+    >
       <img class="card-img-top" [src]="product.imageUrl" alt="not-found" />
       <div class="card-body">
         <h5 class="card-title">name: {{ product.title }}</h5>
         <p class="card-text">Price: {{ product.price }}$</p>
         <p class="card-text">Category: {{ product.category }}</p>
         <hr />
-        <button class="btn btn-primary w-100"
-         (click)="addToCart()"
-        >Add to cart</button>
+        <button class="btn btn-primary w-100" (click)="addToCart(product)">
+          Add to cart
+        </button>
+
+        <div class="footer">
+          <button
+            class="btn btn-primary"
+            (click)="updateQuantity(product, '+')"
+          >
+            +
+          </button>
+          <div class="quantity">
+            {{ product.quantity }}
+          </div>
+          <button
+            class="btn btn-primary"
+            (click)="updateQuantity(product, '-')"
+          >
+            -
+          </button>
+        </div>
       </div>
     </div>
   </div>

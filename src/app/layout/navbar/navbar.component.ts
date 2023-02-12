@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ProductService } from 'src/app/shared/services/product.service';
+import { ShoppingListService } from 'src/app/shared/services/shopping-list.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,15 +13,33 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class NavbarComponent implements OnInit {
   userData!: User;
-
+  items!: any[];
+  quantity!: number;
+  cartId!: string;
   constructor(
     private auth: AuthService,
     private route: Router,
-    private user: UserService
+    private user: UserService,
+    private shoppingListService: ShoppingListService,
+    private productService: ProductService
   ) {}
 
   async ngOnInit() {
+    this.cartId = localStorage.getItem('cartId')!;
     this.userData = await this.user.get(this.user.getId());
+
+    if (this.cartId != 'null') {
+      this.shoppingListService.getItems(this.cartId).subscribe((items) => {
+        this.items = this.productService.convertData(items);
+
+        this.quantity = this.items.reduce(
+          (previousValue: any, currentValue: any) => {
+            return previousValue + currentValue.quantity;
+          },
+          0
+        );
+      });
+    }
   }
 
   logout() {

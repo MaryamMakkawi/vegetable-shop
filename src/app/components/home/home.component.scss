@@ -28,3 +28,17 @@
   }
 }
 
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    flex: auto;
+    &.quantity {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
