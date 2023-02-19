@@ -78,12 +78,10 @@ export class HomeComponent implements OnInit {
       this.shoppingListService
         .addFirstItem(product, cartKey)
         .subscribe((itemId: any) => {
-          //TODO cartId what no catKey???
-          this.shoppingListService
-            .getItems(this.cartId.slice(1, -1))
-            .subscribe((items) => {
-              this.items = this.productService.convertData(items);
-            });
+          this.shoppingListService.getItems(cartKey).subscribe((items) => {
+            this.items = this.productService.convertData(items);
+            ++this.shoppingListService.itemsQuantity;
+          });
         });
     });
   }
@@ -112,7 +110,7 @@ export class HomeComponent implements OnInit {
                 } else {
                   // TODO icons X for delete
                   this.shoppingListService
-                    .DeleteItem(this.cartId.slice(1, -1), ele.id)
+                    .deleteItem(this.cartId.slice(1, -1), ele.id)
                     .subscribe((item) => {
                       const indexItem = this.items.indexOf(ele);
                       this.items.splice(indexItem, 1);

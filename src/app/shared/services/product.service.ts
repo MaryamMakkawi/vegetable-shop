@@ -32,12 +32,14 @@ export class ProductService {
 
   convertData(data: any) {
     let arrayOfObj: any[] = [];
-    Object.keys(data).forEach((key) =>
-      arrayOfObj.push({
-        id: key,
-        ...data[key],
-      })
-    );
+    if (data) {
+      Object.keys(data).forEach((key) =>
+        arrayOfObj.push({
+          id: key,
+          ...data[key],
+        })
+      );
+    }
     return arrayOfObj;
   }
 }

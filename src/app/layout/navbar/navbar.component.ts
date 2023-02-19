@@ -14,13 +14,12 @@ import { ShoppingListService } from 'src/app/shared/services/shopping-list.servi
 export class NavbarComponent implements OnInit {
   userData!: User;
   items!: any[];
-  quantity!: number;
   cartId!: string;
   constructor(
     private auth: AuthService,
     private route: Router,
     private user: UserService,
-    private shoppingListService: ShoppingListService,
+    public shoppingListService: ShoppingListService,
     private productService: ProductService
   ) {}
 
@@ -31,13 +30,8 @@ export class NavbarComponent implements OnInit {
     if (this.cartId != 'null') {
       this.shoppingListService.getItems(this.cartId).subscribe((items) => {
         this.items = this.productService.convertData(items);
-
-        this.quantity = this.items.reduce(
-          (previousValue: any, currentValue: any) => {
-            return previousValue + currentValue.quantity;
-          },
-          0
-        );
+        this.shoppingListService.itemsQuantity =
+          this.shoppingListService.totalQuantity(this.items);
       });
     }
   }

@@ -10,6 +10,7 @@ import { ProductService } from './product.service';
 })
 export class ShoppingListService {
   cartId!: string;
+  itemsQuantity: number=0;
   constructor(
     private api: ApiService,
     private productService: ProductService
@@ -61,11 +62,13 @@ export class ShoppingListService {
     operation: string
   ) {
     if (operation == '+') {
+      ++this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
         quantity: productExist.quantity + 1,
       });
     } else {
+      --this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
         quantity: productExist.quantity - 1,
@@ -77,8 +80,11 @@ export class ShoppingListService {
     return this.api.get(`shoppingList/${id}/items`);
   }
 
-  DeleteItem(cartId: string, itemId: string) {
+  deleteItem(cartId: string, itemId: string) {
     return this.api.delete(`shoppingList/${cartId}/items/${itemId}`);
+  }
+  deleteItems(cartId: string) {
+    return this.api.delete(`shoppingList/${cartId}/items/`);
   }
 
   checkProductExist(items: any, product: Product) {
@@ -89,4 +95,13 @@ export class ShoppingListService {
     return exist;
   }
 
+  totalQuantity(items: any) {
+    const itemsQuantity = items.reduce(
+      (previousValue: any, currentValue: any) => {
+        return previousValue + currentValue.quantity;
+      },
+      0
+    );
+    return itemsQuantity;
+  }
 }

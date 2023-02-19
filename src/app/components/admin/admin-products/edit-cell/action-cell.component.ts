@@ -14,7 +14,7 @@ import { SendDataService } from '../send-data.service';
     <a (click)="goDeleteProduct()"> <i class="bi bi-trash-fill"></i></a> `,
 
   styles: [
-    'i{font-size:1.2rem}',
+    'i{font-size:20px}',
     '.bi-pencil-fill{color:green;margin-right:20px;&:hover{color:lightgreen}}',
     '.bi-trash-fill{color:red;&:hover{color:lightcoral}}',
   ],

@@ -1,25 +1,22 @@
 <div class="container">
   <h1>Shopping Cart</h1>
-  <p class="mt-3">You have ---quantity--- items in your Shopping Cart.</p>
+  <p class="mt-3">
+    You have {{ shoppingListService.itemsQuantity }} items in your Shopping
+    Cart.
+  </p>
 
-  <table class="table table-hover mt-5">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Product</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of items">
-        <th scope="row">
-          <img [src]="item.product.imageUrl" alt="Not Found" />
-        </th>
-        <td>{{ item.product.title }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.product.price | currency }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ag-grid-angular
+    style="width: 820px; height: 300px"
+    class="ag-theme-alpine"
+    [rowData]="items"
+    [columnDefs]="columnDefs"
+    [rowHeight]="60"
+  >
+  </ag-grid-angular>
+
+  <div class="total-price">Total Price : {{totalPrice}} </div>
+
+
+  <button class="btn btn-danger mt-2 mb-3" (click)="clear()"><i class="bi bi-cart-x"></i> Clear Shopping Cart</button>
+  <button class="btn btn-success ms-3 mt-2 mb-3"> Check out</button>
 </div>
