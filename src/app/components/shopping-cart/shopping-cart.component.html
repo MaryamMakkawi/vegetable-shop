@@ -8,15 +8,17 @@
   <ag-grid-angular
     style="width: 820px; height: 300px"
     class="ag-theme-alpine"
-    [rowData]="items"
-    [columnDefs]="columnDefs"
+    [columnDefs]="gridOptions.columnDefs"
     [rowHeight]="60"
+    [gridOptions]="gridOptions"
+    (gridReady)="onGridReady($event)"
   >
   </ag-grid-angular>
 
-  <div class="total-price">Total Price : {{totalPrice}} </div>
+  <div class="total-price">Total Price : {{ shoppingListService.totalPrice }}</div>
 
-
-  <button class="btn btn-danger mt-2 mb-3" (click)="clear()"><i class="bi bi-cart-x"></i> Clear Shopping Cart</button>
-  <button class="btn btn-success ms-3 mt-2 mb-3"> Check out</button>
+  <button class="btn btn-danger mt-2 mb-3" (click)="clear()">
+    <i class="bi bi-cart-x"></i> Clear Shopping Cart
+  </button>
+  <button class="btn btn-success ms-3 mt-2 mb-3">Check out</button>
 </div>

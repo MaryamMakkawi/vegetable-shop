@@ -10,11 +10,11 @@ import { ProductService } from './product.service';
 })
 export class ShoppingListService {
   cartId!: string;
-  itemsQuantity: number=0;
-  constructor(
-    private api: ApiService,
-    private productService: ProductService
-  ) {}
+  itemsQuantity: number = 0;
+  totalPrice: number = 0;
+  constructor(private api: ApiService, private productService: ProductService) {
+    this.totalPrice = this.totalPrice;
+  }
 
   // CART
   newCart(data: any) {
@@ -50,6 +50,7 @@ export class ShoppingListService {
 
   // ITEMS
   addFirstItem(product: Product, id: string) {
+    this.totalPrice += +product.price;
     return this.api.post(`shoppingList/${id}/items`, {
       product,
       quantity: 1,
@@ -62,12 +63,16 @@ export class ShoppingListService {
     operation: string
   ) {
     if (operation == '+') {
+      this.totalPrice += +productExist.product.price;
+
       ++this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
         quantity: productExist.quantity + 1,
       });
     } else {
+      this.totalPrice -= +productExist.product.price;
+
       --this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
@@ -104,4 +109,5 @@ export class ShoppingListService {
     );
     return itemsQuantity;
   }
+
 }

@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   filteredProduct!: Product[];
   cartId!: string;
   active!: number;
+  hidden: boolean = false;
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
@@ -60,7 +61,8 @@ export class HomeComponent implements OnInit {
         .subscribe((items) => {
           this.items = this.productService.convertData(items);
 
-          // search item correct in filter array because error in index
+          //TODO search item correct in filter array because error in index
+          //TODO addToCart + -
         });
     }
   }
@@ -105,17 +107,9 @@ export class HomeComponent implements OnInit {
           .subscribe((item: any) => {
             this.items.forEach((ele) => {
               if (productExist.id == ele.id) {
-                if (item.quantity != 0) {
-                  ele.quantity = item.quantity;
-                } else {
-                  // TODO icons X for delete
-                  this.shoppingListService
-                    .deleteItem(this.cartId.slice(1, -1), ele.id)
-                    .subscribe((item) => {
-                      const indexItem = this.items.indexOf(ele);
-                      this.items.splice(indexItem, 1);
-                    });
-                }
+                item.quantity != 0
+                  ? (ele.quantity = item.quantity)
+                  : (this.hidden = true);
               }
             });
           });
