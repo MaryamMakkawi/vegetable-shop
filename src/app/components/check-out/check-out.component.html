@@ -1,1 +1,73 @@
-<p>check-out works!</p>
+<div class="container">
+  <h1>shipping</h1>
+  <div class="d-flex justify-content-between">
+    <div class="col-5">
+      <form class="shippingForm" [formGroup]="shoppingForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            id="name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Address" class="form-label">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="addressLine1"
+            id="Address"
+            placeholder="Line1"
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="addressLine2"
+            id="Address"
+            placeholder="Line2"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">City</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="city"
+            id="city"
+          />
+        </div>
+        <button type="button" class="btn btn-success" (click)="addOrder()">
+          Place Order
+        </button>
+      </form>
+    </div>
+
+    <div class="card" style="width: 25rem">
+      <div class="card-body pb-0">
+        <h5 class="card-title">Order Summary</h5>
+        <p class="card-text">
+          You have <b>{{ shoppingListService.itemsQuantity }}</b> items in your
+          shopping cart.
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li
+          *ngFor="let item of items"
+          class="list-group-item d-flex justify-content-between"
+        >
+          {{ item.quantity }} X {{ item.product.title }}
+          <span> {{ item.product.price | currency }}</span>
+        </li>
+      </ul>
+      <div class="card-body pb-0">
+        <b class="card-text">
+          TotalPrice: {{ shoppingListService.totalPrice }}
+        </b>
+      </div>
+    </div>
+  </div>
+</div>

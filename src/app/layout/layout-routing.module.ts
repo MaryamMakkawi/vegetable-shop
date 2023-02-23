@@ -40,7 +40,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'order-success',
+        path: 'order-success/:id',
         loadChildren: () =>
           import('../components/order-success/order-success.module').then(
             (m) => m.OrderSuccessModule
