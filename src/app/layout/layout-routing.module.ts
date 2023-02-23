@@ -42,17 +42,26 @@ const routes: Routes = [
       {
         path: 'order-success/:id',
         loadChildren: () =>
-          import('../components/order-success/order-success.module').then(
+          import('../components/order/order-success/order-success.module').then(
             (m) => m.OrderSuccessModule
           ),
       },
       {
         path: 'my-orders',
         loadChildren: () =>
-          import('../components/my-orders/my-orders.module').then(
+          import('../components/order/my-orders/my-orders.module').then(
             (m) => m.MyOrdersModule
           ),
       },
+
+      {
+        path: 'order-details/:id',
+        loadChildren: () =>
+          import('../components/order/order-details/order-details.module').then(
+            (m) => m.OrderDetailsModule
+          ),
+      },
+
       {
         path: 'admin/products',
         loadChildren: () =>

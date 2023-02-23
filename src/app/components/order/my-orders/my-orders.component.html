@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Orders</h1>
+  <h1>My Order</h1>
   <hr />
 
   <table class="table">
@@ -7,15 +7,14 @@
       <tr>
         <th>Customer</th>
         <th>Date</th>
-
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let orderAll of orders">
-        <td>{{ orderAll.shipping.name }}</td>
-        <td>{{ orderAll.datePlaced }}</td>
+      <tr *ngFor="let myOrder of orders">
+        <td>{{ myOrder.shipping.name }}</td>
+        <td>{{ myOrder.datePlaced }}</td>
         <td>
-          <a class="view" [routerLink]="['../../order-details', orderAll.id]"
+          <a class="view" [routerLink]="['../order-details', myOrder.id]"
             >View</a
           >
         </td>

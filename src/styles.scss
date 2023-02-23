@@ -70,3 +70,14 @@ nav {
     cursor: pointer;
   }
 }
+
+// Orders
+.view{
+  color: red;
+  transition: 0.5s;
+  &:hover{
+  color: lightcoral;
+
+  }
+}
+
