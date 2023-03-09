@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
+import { NotifierService } from 'src/app/shared/services/notifier.service';
 import { ShoppingListService } from 'src/app/shared/services/shopping-list.service';
 
 @Component({
@@ -13,14 +15,17 @@ import { ShoppingListService } from 'src/app/shared/services/shopping-list.servi
   `,
   styles: [
     'img{width: 50px; height: 50px ;border-radius: 50%; background-size: cover;}',
-    '.clear{  margin-right: 10px; transition: 0.5s; &:hover { .bi-cart-x { color: lightcoral;} }.bi-cart-x {font-size: 25px;  color: red;cursor: pointer;}}',
+    '.clear{  margin-right: 10px; transition: 0.5s; &:hover {.bi-cart-x { color: lightcoral;} }.bi-cart-x {font-size: 25px;  color: red;cursor: pointer;}}',
   ],
 })
 export class ImageComponent implements OnInit, ICellRendererAngularComp {
   params!: ICellRendererParams;
   cartId!: string;
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private notifierService: NotifierService
+  ) {}
 
   ngOnInit(): void {
     this.cartId = localStorage.getItem('cartId')!;
@@ -35,11 +40,19 @@ export class ImageComponent implements OnInit, ICellRendererAngularComp {
   }
 
   deleteItem() {
+    const cellData = this.params.data;
     if (this.cartId != 'null') {
       this.shoppingListService
-        .deleteItem(this.cartId, this.params.data.id)
-        .subscribe();
-      this.params.api.applyTransaction({ remove: [this.params.data] });
+        .deleteItem(this.cartId, cellData.id)
+        .subscribe((res) => {
+          this.params.api.applyTransaction({ remove: [cellData] });
+          this.shoppingListService.itemsQuantity -= cellData.quantity;
+          this.shoppingListService.totalPrice -=
+            cellData.product.price * cellData.quantity;
+          this.notifierService.successNotification(
+            'Delete item from cart successfully'
+          );
+        });
     }
   }
 }

@@ -1,4 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -7,19 +9,46 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+  formSign!: FormGroup;
 
-  ngOnInit(): void {}
+  constructor(private auth: AuthService, private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
+    this.formSign = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  handelControl(control: string) {
+    return this.formSign.get(control);
+  }
+  handelErrors(control: string) {
+    return this.formSign.get(control)?.errors!;
+  }
 
   googleLogin() {
+    this.auth.SignInWithGoogle();
+  }
 
-    this.auth.SignInWithGoogle()
-      .then((res) => {
-        console.log(`Successfully logged in!`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  signUp() {
+    this.auth.signUp(
+      this.formSign.value.name,
+      this.formSign.value.email,
+      this.formSign.value.password
+    );
+  }
 
+  signIn() {
+    this.auth.SignIn(
+      this.formSign.value.name,
+      this.formSign.value.email,
+      this.formSign.value.password
+    );
   }
 }

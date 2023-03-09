@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { ApiService } from 'src/app/core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private angularFireDatabase: AngularFireDatabase) {}
+  constructor(private api: ApiService) {}
 
   get() {
-    return this.angularFireDatabase.list('categories/').valueChanges();
+    return this.api.get('categories/');
   }
 }

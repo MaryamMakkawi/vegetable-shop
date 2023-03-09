@@ -1,22 +1,84 @@
 <div class="login">
   <div class="box">
-    <div class="form">
-      <h2>Login</h2>
+    <div class="form" [formGroup]="formSign">
+      <h2>Login Or signUp</h2>
       <div class="inputBox">
-        <input type="text" required="required" />
+        <input type="text" required="required" formControlName="name" />
         <span>Username</span>
         <i></i>
       </div>
+      <!--! ERRORS  -->
+      <div
+        *ngIf="
+          handelControl('name')?.invalid &&
+          (handelControl('name')?.dirty || handelControl('name')?.touched)
+        "
+      >
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="handelErrors('name')['required']"
+        >
+          userName is required,Please.
+        </div>
+      </div>
       <div class="inputBox">
-        <input type="password" required="required" />
+        <input type="text" required="required" formControlName="email" />
+        <span>Email</span>
+        <i></i>
+      </div>
+      <!--! ERRORS  -->
+      <div
+        *ngIf="
+          handelControl('email')?.invalid &&
+          (handelControl('email')?.dirty || handelControl('email')?.touched)
+        "
+      >
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="handelErrors('email')['required']"
+        >
+          Email is required,Please.
+        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="handelErrors('email')['email']"
+        >
+         it isn't email
+        </div>
+      </div>
+      <div class="inputBox">
+        <input type="password" required="required" formControlName="password" />
         <span>Password</span>
         <i></i>
       </div>
-      <div class="links">
-        <a (click)="googleLogin()">Login with <i class="bi bi-google"></i>oogle</a>
-        <!-- <a href="/">Forgot password?</a> -->
+      <!--! ERRORS  -->
+      <div
+        *ngIf="
+          handelControl('password')?.invalid &&
+          (handelControl('password')?.dirty ||
+            handelControl('password')?.touched)
+        "
+      >
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="handelErrors('password')['required']"
+        >
+          Password is required,Please.
+        </div>
       </div>
-      <a routerLink="/"><input type="submit" value="Login" /></a>
+      <div class="links">
+        <a (click)="googleLogin()"
+          >Login with <i class="bi bi-google"></i>oogle</a
+        >
+      </div>
+      <div class="d-flex justify-content-around">
+        <a (click)="signUp()"><input type="submit" value="SignUp" /></a>
+        <a (click)="signIn()"><input type="submit" value="SignIn" /></a>
+      </div>
     </div>
   </div>
 </div>

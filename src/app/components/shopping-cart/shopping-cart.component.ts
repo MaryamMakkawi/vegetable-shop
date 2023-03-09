@@ -36,6 +36,7 @@ export class ShoppingCartComponent implements OnInit {
       },
     ],
     animateRows: true,
+    suppressHorizontalScroll: true,
   };
 
   constructor(
@@ -78,6 +79,4 @@ export class ShoppingCartComponent implements OnInit {
         this.shoppingListService.totalPrice = 0;
       });
   }
-  //TODO checkOut
-  //TODO orders
 }

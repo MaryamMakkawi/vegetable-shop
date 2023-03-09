@@ -29,28 +29,38 @@
     >
       <img class="card-img-top" [src]="product.imageUrl" alt="not-found" />
       <div class="card-body">
-        <h5 class="card-title">name: {{ product.title }}</h5>
+        <h5 class="card-title" [title]="product.title">
+          name: {{ product.title }}
+        </h5>
         <p class="card-text">Price: {{ product.price }}$</p>
-        <p class="card-text">Category: {{ product.category }}</p>
+        <p class="card-text" [title]="product.category">
+          Category: {{ product.category }}
+        </p>
         <hr />
-        <button class="btn btn-primary w-100" (click)="addToCart(product)">
+        <button
+          class="button w-100"
+          (click)="addToCart(product)"
+          *ngIf="checkIfExist(product.id) === undefined"
+        >
           Add to cart
         </button>
 
-        <div class="footer">
+        <div class="footer" *ngIf="checkIfExist(product.id) !== undefined">
           <button
-            class="btn btn-primary"
+            class="button"
             (click)="updateQuantity(product, '+')"
+            [disabled]="loading"
           >
             +
           </button>
           <div class="quantity">
-            {{ product.quantity }}
+            {{ checkIfExist(product.id).quantity }}
           </div>
           <button
-            class="btn btn-primary"
-            *ngIf="hidden"
+            class="button"
+            *ngIf="checkIfExist(product.id).quantity !== 1"
             (click)="updateQuantity(product, '-')"
+            [disabled]="loading"
           >
             -
           </button>

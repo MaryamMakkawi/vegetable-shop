@@ -23,12 +23,11 @@ export class AdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.user.get(this.user.getId()).then((user) => {
-      if (user.isAdmin) {
-        return true;
-      } else {
-        return this.router.navigateByUrl('/home');
-      }
-    });
+    const currentUser = JSON.parse(localStorage.getItem('user')!);
+    if (currentUser.isAdmin) {
+      return true;
+    } else {
+      return this.router.navigateByUrl('/home');
+    }
   }
 }

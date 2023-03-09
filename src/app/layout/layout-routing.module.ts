@@ -18,13 +18,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('../components/home/home.module').then((m) => m.HomeModule),
       },
-      {
-        path: 'product',
-        loadChildren: () =>
-          import('../components/product/product.module').then(
-            (m) => m.ProductModule
-          ),
-      },
+
       {
         path: 'shopping-cart',
         loadChildren: () =>
@@ -37,13 +31,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('../components/check-out/check-out.module').then(
             (m) => m.CheckOutModule
-          ),
-      },
-      {
-        path: 'order-success/:id',
-        loadChildren: () =>
-          import('../components/order/order-success/order-success.module').then(
-            (m) => m.OrderSuccessModule
           ),
       },
       {

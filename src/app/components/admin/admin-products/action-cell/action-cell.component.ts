@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { NotifierService } from 'src/app/shared/services/notifier.service';
@@ -19,7 +19,7 @@ import { SendDataService } from '../send-data.service';
     '.bi-trash-fill{color:red;&:hover{color:lightcoral}}',
   ],
 })
-export class ActionCellComponent implements OnInit, ICellRendererAngularComp {
+export class ActionCellComponent implements  ICellRendererAngularComp {
   params!: ICellRendererParams;
   constructor(
     private sendDataService: SendDataService,
@@ -27,7 +27,6 @@ export class ActionCellComponent implements OnInit, ICellRendererAngularComp {
     private notifierService: NotifierService
   ) {}
 
-  ngOnInit(): void {}
 
   agInit(params: ICellRendererParams<any, any>): void {
     this.params = params;
@@ -52,4 +51,7 @@ export class ActionCellComponent implements OnInit, ICellRendererAngularComp {
       },
     });
   }
+
+
+
 }

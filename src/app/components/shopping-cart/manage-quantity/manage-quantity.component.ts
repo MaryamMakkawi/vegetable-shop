@@ -7,18 +7,25 @@ import { ShoppingListService } from 'src/app/shared/services/shopping-list.servi
   selector: '',
   template: `
     <div class="quantity">
-      <button class="btn btn-primary" (click)="updateQuantity('+')">+</button>
+      <button
+        class="btn btn-primary"
+        (click)="updateQuantity('+')"
+        [disabled]="loading"
+      >
+        +
+      </button>
       <span>{{ quantity }}</span>
       <button
         class="btn btn-primary"
-        *ngIf="visibility"
+        *ngIf="quantity !== 1"
         (click)="updateQuantity('-')"
+        [disabled]="loading"
       >
         -
       </button>
     </div>
   `,
-  styles: ['.quantity{display:block}', 'span{margin:0 10px 0 10px}'],
+  styles: ['.quantity{display:block;}', 'span{margin:0 10px 0 10px;}'],
 })
 export class ManageQuantityComponent
   implements OnInit, ICellRendererAngularComp
@@ -26,7 +33,7 @@ export class ManageQuantityComponent
   params!: ICellRendererParams;
   cartId!: string;
   quantity!: number;
-  visibility: boolean = true;
+  loading!: boolean;
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
@@ -36,16 +43,13 @@ export class ManageQuantityComponent
   agInit(params: ICellRendererParams<any, any>) {
     this.params = params;
     this.quantity = this.params.data.quantity;
-
-    if (this.quantity == 1) {
-      this.visibility = !this.visibility;
-    }
   }
   refresh(params: ICellRendererParams<any, any>): boolean {
     return true;
   }
 
   updateQuantity(operation: string) {
+    this.loading = true;
     if (this.cartId != 'null') {
       this.shoppingListService
         .updateQuantity(
@@ -58,10 +62,10 @@ export class ManageQuantityComponent
           this.quantity = item.quantity;
           this.params.data.quantity = item.quantity;
           this.params.api.applyTransaction({ update: [] });
-
-          if (item.quantity == 1) {
-            this.visibility = !this.visibility;
-          }
+          operation === '+'
+            ? ++this.shoppingListService.itemsQuantity
+            : --this.shoppingListService.itemsQuantity;
+          this.loading = false;
         });
     }
   }

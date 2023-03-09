@@ -64,16 +64,12 @@ export class ShoppingListService {
   ) {
     if (operation == '+') {
       this.totalPrice += +productExist.product.price;
-
-      ++this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
         quantity: productExist.quantity + 1,
       });
     } else {
       this.totalPrice -= +productExist.product.price;
-
-      --this.itemsQuantity;
       return this.api.put(`shoppingList/${id}/items/${productExist.id}`, {
         product,
         quantity: productExist.quantity - 1,
@@ -94,6 +90,7 @@ export class ShoppingListService {
 
   checkProductExist(items: any, product: Product) {
     const itemsConvert = this.productService.convertData(items);
+
     const exist = itemsConvert.find(
       (productItems: any) => productItems.product.id == product.id
     );

@@ -11,10 +11,21 @@
             formControlName="title"
             [(ngModel)]="product.title"
           />
-
-          <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-            Tooltip on top
-          </button> -->
+        </div>
+        <!--! ERRORS  -->
+        <div
+          *ngIf="
+            handelControl('title')?.invalid &&
+            (handelControl('title')?.dirty || handelControl('title')?.touched)
+          "
+        >
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="handelErrors('title')['required']"
+          >
+            Title is required,Please.
+          </div>
         </div>
 
         <div class="col-12">
@@ -27,6 +38,21 @@
             [(ngModel)]="product.price"
           />
         </div>
+        <!--! ERRORS  -->
+        <div
+          *ngIf="
+            handelControl('price')?.invalid &&
+            (handelControl('price')?.dirty || handelControl('price')?.touched)
+          "
+        >
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="handelErrors('price')['required']"
+          >
+            Price is required,Please.
+          </div>
+        </div>
 
         <div class="col-12">
           <label for="inputImageURL" class="form-label">ImageURL</label>
@@ -38,6 +64,29 @@
             [(ngModel)]="product.imageUrl"
           />
         </div>
+        <!--! ERRORS  -->
+        <div
+          *ngIf="
+            handelControl('imageUrl')?.invalid &&
+            (handelControl('imageUrl')?.dirty ||
+              handelControl('imageUrl')?.touched)
+          "
+        >
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="handelErrors('imageUrl')['required']"
+          >
+            imageUrl is required,Please.
+          </div>
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="handelErrors('imageUrl')['invalidUrl']"
+          >
+            invalid URL .
+          </div>
+        </div>
 
         <div class="col-12">
           <label for="inputCategory" class="form-label">Category:</label>
@@ -48,13 +97,26 @@
             [(ngModel)]="product.category"
           >
             <option selected>Choose...</option>
-            <option
-              *ngFor="let category of categories | async"
-              [value]="category.name"
-            >
+            <option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </option>
           </select>
+        </div>
+        <!--! ERRORS  -->
+        <div
+          *ngIf="
+            handelControl('category')?.invalid &&
+            (handelControl('category')?.dirty ||
+              handelControl('category')?.touched)
+          "
+        >
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="handelErrors('category')['required']"
+          >
+            Category is required,Please.
+          </div>
         </div>
 
         <div class="col-2" *ngIf="!id">
@@ -78,11 +140,7 @@
           </button>
         </div>
         <div class="col-2">
-          <button
-            (click)="onCancel()"
-            type="button"
-            class="btn btn-primary"
-          >
+          <button (click)="onCancel()" type="button" class="btn btn-primary">
             Cancel
           </button>
         </div>

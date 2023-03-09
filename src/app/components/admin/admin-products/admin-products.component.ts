@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ColDef, GridApi } from 'ag-grid-community';
+import {  GridApi, GridOptions } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 
 import { ProductService } from 'src/app/shared/services/product.service';
 import { Product } from 'src/app/shared/interfaces/product.interface';
-import { ActionCellComponent } from './edit-cell/action-cell.component';
+import { ActionCellComponent } from './action-cell/action-cell.component';
 import { Router } from '@angular/router';
+import { SendDataService } from './send-data.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -20,20 +21,29 @@ export class AdminProductsComponent implements OnInit {
   subscription!: Subscription;
   cellSelectedData!: Product;
   gridApi!: GridApi;
-  columnDefs: ColDef[] = [
-    { field: 'title' },
-    { field: 'imageUrl' },
-    { field: 'price' },
-    { field: 'category' },
-    {
-      field: 'Action',
-      cellRenderer: ActionCellComponent,
-      pinned: 'right',
-      width: 120,
-    },
-  ];
+  gridOptions: GridOptions = {
+    columnDefs:[
+      { field: 'title' },
+      { field: 'imageUrl' },
+      { field: 'price' },
+      { field: 'category' },
+      {
+        field: 'Action',
+        cellRenderer: ActionCellComponent,
+        pinned: 'right',
+        width: 120,
+      },
+    ],
+    animateRows: true,
+    suppressHorizontalScroll: true,
 
-  constructor(private productService: ProductService, private router: Router) {}
+  };
+
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private sendDataService: SendDataService
+  ) {}
 
   ngOnInit() {
     this.productService.getAll().subscribe((data) => {
@@ -42,7 +52,9 @@ export class AdminProductsComponent implements OnInit {
   }
 
   goNewProduct() {
+    this.product = { id: '', title: '', price: '', imageUrl: '', category: '' };
     this.router.navigate(['admin/products/new']);
+    this.sendDataService.sendDataProduct(this.product);
   }
 
   onSearch() {

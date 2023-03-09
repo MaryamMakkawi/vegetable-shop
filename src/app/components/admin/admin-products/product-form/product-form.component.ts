@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
+import { Category } from 'src/app/shared/interfaces/category.interface';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { NotifierService } from 'src/app/shared/services/notifier.service';
@@ -16,7 +16,7 @@ import { SendDataService } from '../send-data.service';
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
-  categories!: Observable<any>;
+  categories!: Category[];
   productForm!: FormGroup;
   id!: string;
   product: Product = {
@@ -30,7 +30,7 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private category: CategoryService,
+    private categoryService: CategoryService,
     private fb: FormBuilder,
     private productService: ProductService,
     private receiveDataService: SendDataService,
@@ -39,23 +39,27 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.categories = this.category.get();
-    this.id = this.activatedRoute.snapshot.params['id'];
+    this.categoryService.get().subscribe((categories: any) => {
+      this.categories = this.productService.convertData(categories);
+    });
 
-    if (this.receiveDataService.receiveDataProduct()) {
-      this.product = this.receiveDataService.receiveDataProduct();
-    } else {
-      this.productService.get(this.id).subscribe((data: any) => {
-        this.product.category = data.category;
-        this.product.id = this.id;
-        this.product.imageUrl = data.imageUrl;
-        this.product.price = data.price;
-        this.product.title = data.title;
-      });
+    this.id = this.activatedRoute.snapshot.params['id'];
+    if (this.id) {
+      if (this.receiveDataService.receiveDataProduct()) {
+        this.product = this.receiveDataService.receiveDataProduct();
+      } else {
+        this.productService.get(this.id).subscribe((data: any) => {
+          console.log(data);
+          this.product.category = data.category;
+          this.product.id = this.id;
+          this.product.imageUrl = data.imageUrl;
+          this.product.price = data.price;
+          this.product.title = data.title;
+        });
+      }
     }
   }
 
-  // TODO massage tooltip for error invalid form
   initForm() {
     this.productForm = this.fb.group({
       id: [null],
@@ -64,6 +68,13 @@ export class ProductFormComponent implements OnInit {
       category: ['', Validators.required],
       imageUrl: ['', [Validators.required, validatorUrl]],
     });
+  }
+
+  handelControl(control: string) {
+    return this.productForm.get(control);
+  }
+  handelErrors(control: string) {
+    return this.productForm.get(control)?.errors!;
   }
 
   addNewProduct() {

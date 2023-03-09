@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/interfaces/user.interface';
+import { NotifierService } from 'src/app/shared/services/notifier.service';
 
 import { OrderService } from 'src/app/shared/services/order.service';
 import { ProductService } from 'src/app/shared/services/product.service';
@@ -22,7 +23,8 @@ export class CheckOutComponent implements OnInit {
     private productService: ProductService,
     private orderService: OrderService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private notifierService: NotifierService
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +61,12 @@ export class CheckOutComponent implements OnInit {
       user: this.user.user.uid,
     };
     this.orderService.post('/orders', order).subscribe((orderId) => {
-      this.router.navigate([`order-success/${orderId}`]);
+      this.router.navigate(['../my-orders']);
       this.shoppingListService.totalPrice = 0;
       this.shoppingListService.itemsQuantity = 0;
       localStorage.removeItem('cartId');
       this.items = [];
+      this.notifierService.successNotification('add new order successfully');
     });
   }
 }

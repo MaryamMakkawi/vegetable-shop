@@ -12,21 +12,19 @@ import { ShoppingListService } from 'src/app/shared/services/shopping-list.servi
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  userData!: User;
+  userData!: { user: User; isAdmin: boolean };
   items!: any[];
   cartId!: string;
   constructor(
     private auth: AuthService,
     private route: Router,
-    private user: UserService,
     public shoppingListService: ShoppingListService,
     private productService: ProductService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.cartId = localStorage.getItem('cartId')!;
-    this.userData = await this.user.get(this.user.getId());
-
+    this.userData = JSON.parse(localStorage.getItem('user')!);
     if (this.cartId != 'null') {
       this.shoppingListService.getItems(this.cartId).subscribe((items) => {
         this.items = this.productService.convertData(items);
@@ -39,6 +37,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.auth.logout().then((res) => {
       localStorage.removeItem('user');
+      localStorage.removeItem('cartId');
       this.route.navigate(['/login']);
     });
   }
