@@ -81,10 +81,10 @@ export class ProductFormComponent implements OnInit {
     this.productService.add(this.productForm.value).subscribe({
       next: (value) => {
         this.router.navigate(['/admin/products']);
-        this.notifierService.successNotification('success added Product.');
+        this.notifierService.successNotification('Product added successfully .');
       },
       error: (err) => {
-        this.notifierService.errorNotification('Error added Product.');
+        this.notifierService.errorNotification('Cannot  deleted this product.');
       },
     });
   }
@@ -93,10 +93,10 @@ export class ProductFormComponent implements OnInit {
     this.productService.update(editDataProduct.id, editDataProduct).subscribe({
       next: (value) => {
         this.router.navigate(['/admin/products']);
-        this.notifierService.successNotification('success update Product.');
+        this.notifierService.successNotification('Product updated successfully .');
       },
       error: (err) => {
-        this.notifierService.errorNotification('Error update Product.');
+        this.notifierService.errorNotification('Cannot  updated this product.');
       },
     });
   }

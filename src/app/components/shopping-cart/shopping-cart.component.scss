@@ -3,10 +3,16 @@
   margin-top: 30px;
   text-align: center;
 }
-.total-price {
-  direction: rtl;
-  border-top: 2px;
-  margin-top: 10px;
+.parent-grid {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  .total-price {
+    position:absolute;
+    right: 0;
+    border-top: 2px;
+    margin-top: 10px;
+  }
 }
 .bi-cart-x {
   font-size: 20px;

@@ -19,14 +19,13 @@ import { SendDataService } from '../send-data.service';
     '.bi-trash-fill{color:red;&:hover{color:lightcoral}}',
   ],
 })
-export class ActionCellComponent implements  ICellRendererAngularComp {
+export class ActionCellComponent implements ICellRendererAngularComp {
   params!: ICellRendererParams;
   constructor(
     private sendDataService: SendDataService,
     private productService: ProductService,
     private notifierService: NotifierService
   ) {}
-
 
   agInit(params: ICellRendererParams<any, any>): void {
     this.params = params;
@@ -43,15 +42,14 @@ export class ActionCellComponent implements  ICellRendererAngularComp {
   goDeleteProduct() {
     this.productService.delete(this.params.data.id).subscribe({
       next: (value) => {
-        this.notifierService.successNotification('success Delete Product.');
+        this.notifierService.successNotification(
+          'Product Deleted successfully.'
+        );
         this.params.api.applyTransaction({ remove: [this.params.data] });
       },
       error: (error) => {
-        this.notifierService.errorNotification('Error Delete Product.');
+        this.notifierService.errorNotification('Cannot  deleted this item.');
       },
     });
   }
-
-
-
 }

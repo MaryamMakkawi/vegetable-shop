@@ -66,7 +66,7 @@ export class CheckOutComponent implements OnInit {
       this.shoppingListService.itemsQuantity = 0;
       localStorage.removeItem('cartId');
       this.items = [];
-      this.notifierService.successNotification('add new order successfully');
+      this.notifierService.successNotification('Add new order successfully');
     });
   }
 }

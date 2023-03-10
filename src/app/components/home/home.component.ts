@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
             this.filter(filter['category'], filter['id']);
           } else {
             this.active = -1;
+            this.filteredProduct = [...this.products];
           }
         },
       });
